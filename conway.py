@@ -143,4 +143,3 @@ class conway:
 root = Tk() # call root
 my_gui = conway(root) # set the GUI
 root.mainloop() # run the main loop
-# print("stopping") # runs this when stopping
