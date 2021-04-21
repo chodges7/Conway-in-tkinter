@@ -8,6 +8,7 @@ window_width = 540
 window_height = 540
 canvas_width = (window_width - 80) # 460
 canvas_height = (window_height - 80) # 460
+dimension = 21
 
 # #d4d4d4 = alive
 # #2b2b2b = dead
@@ -20,9 +21,9 @@ class conway:
 
         # ----- variables -----
         self.color_dict = {0:"#d4d4d4", 1:"#2b2b2b",}
-        self.array = [0] * 21
-        for i in range(21):
-            self.array[i] = [0] * 21
+        self.array = [0] * dimension
+        for i in range(dimension):
+            self.array[i] = [0] * dimension
 
         # ----- buttons and lables -----
         self.label = Label(root, text="Welcome to the game")
@@ -30,25 +31,26 @@ class conway:
         self.change_button = Button(root, text="Randomize",
                                     command=self.change_color)
 
-        # ----- define canvas and binds -----
+        # ----- define canvas -----
         self.canvas = Canvas(root, bg="white", bd=0,
                              width=canvas_width,
                              height=canvas_height)
-        self.canvas.bind("<Button-1>", self.click)
 
         # ----- make the lines and boxes in the canvas ------
-        for i in range(21):
-            self.canvas.create_line(22 * i, 0, 22 * i, 460)
-            self.canvas.create_line(0, 22 * i, 460, 22 * i)
-            for j in range(21):
+        rect_side = canvas_width / dimension
+        for i in range(dimension):
+            for j in range(dimension):
+                # set the random color of the squares
                 rng = randrange(100)
                 if (rng < 15):
                     rand_color = self.color_dict[0]
                 else:
                     rand_color = self.color_dict[1]
+
+
                 self.id = self.canvas.create_rectangle(
-                    22*j, 22*i,
-                    22*(j+1), 22*(i+1),
+                    rect_side*j, rect_side*i,
+                    rect_side*(j+1), rect_side*(i+1),
                     fill=rand_color)
                 self.array[i][j] = self.id
 
@@ -79,9 +81,9 @@ class conway:
                 # this is for wraparound:
                 #   if we're at array[0][21] it's actually array[0][0]
                 #   python deals with array[-1][-1] so we dont' worry about that
-                if i_plu > 20:
+                if i_plu > len(sim_arr) - 1:
                     i_plu = 0
-                if j_plu > 20:
+                if j_plu > len(sim_arr) - 1:
                     j_plu = 0
 
                 # dictionary to count neighbors
@@ -122,14 +124,6 @@ class conway:
                     # Any dead cell with exactly three live neighbours becomes a live cell
                     if (total == 3):
                         self.canvas.itemconfigure(sim_arr[i][j], fill="#d4d4d4")
-
-    def click(self, event):
-        b = int(event.x / 22)
-        a = int(event.y / 22)
-        rect_id = self.array[a][b]
-        self.canvas.itemconfigure(rect_id, fill="#d4d4d4")
-        # this is how to use positional arguments on print
-        print("array[%d][%d] at X:%d Y:%d"%(a, b, event.x, event.y))
 
     def change_color(self):
         cur_array = self.array
