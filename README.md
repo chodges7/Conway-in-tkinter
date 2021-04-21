@@ -1,7 +1,7 @@
 # Running Conway's Game of Life using Python
 
 ### Let's see it in action
-![Alt Text][conway.gif]
+![Alt Text](conway.gif)
 
 ### Intructions to run it yourself:
 * Download the conway.py file (by doing a `git clone...` or downloading from the repo
