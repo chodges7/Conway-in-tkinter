@@ -16,7 +16,7 @@ dimension = 21
 class conway:
     def __init__(self, root):
         self.root = root
-        self.root.title("Lab 11/12-Conway")
+        self.root.title("Conway's Game of Life in Tkinter")
         self.root.geometry("{}x{}".format(window_width, window_height))
 
         # ----- variables -----
