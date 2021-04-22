@@ -1,4 +1,3 @@
-#!/usr/bin/python3.5
 from tkinter import *
 from random import randrange
 from time import sleep
